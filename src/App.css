@@ -1,0 +1,121 @@
+
+
+html, body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 0;
+    margin: 0;
+
+    --base00: #000000;
+    --base01: #121212;
+    --base02: #222222;
+    --base03: #333333;
+    --base04: #999999;
+    --base05: #c1c1c1;
+    --base06: #999999;
+    --base07: #c1c1c1;
+    --base08: #5f8787;
+    --base09: #aaaaaa;
+    --base0A: #e78a53;
+    --base0B: #fbcb97;
+    --base0C: #aaaaaa;
+    --base0D: #888888;
+    --base0E: #999999;
+    --base0F: #444444;
+
+    /* --base00: #f4f3ec; 
+    --base01: #e7e6df; 
+    --base02: #929181; 
+    --base03: #878573; 
+    --base04: #6c6b5a; 
+    --base05: #5f5e4e; 
+    --base06: #302f27; 
+    --base07: #22221b; 
+    --base08: #ba6236; 
+    --base09: #ae7313; 
+    --base0A: #a5980d; 
+    --base0B: #7d9726; 
+    --base0C: #5b9d48; 
+    --base0D: #36a166; 
+    --base0E: #5f9182; 
+    --base0F: #9d6c7c;  */
+
+    /* --base00: #ffffff;
+    --base01: #e0e0e0;
+    --base02: #d6d6d6;
+    --base03: #8e908c;
+    --base04: #969896;
+    --base05: #4d4d4c;
+    --base06: #282a2e;
+    --base07: #1d1f21;
+    --base08: #c82829;
+    --base09: #f5871f;
+    --base0A: #eab700;
+    --base0B: #718c00;
+    --base0C: #3e999f;
+    --base0D: #4271ae;
+    --base0E: #8959a8;
+    --base0F: #a3685a; */
+    
+    /* --base00: #000000;
+    --base01: #121212;
+    --base02: #222222;
+    --base03: #333333;
+    --base04: #999999;
+    --base05: #c1c1c1;
+    --base06: #999999;
+    --base07: #c1c1c1;
+    --base08: #5f8787;
+    --base09: #aaaaaa;
+    --base0A: #eecc6c;
+    --base0B: #f3ecd4;
+    --base0C: #aaaaaa;
+    --base0D: #888888;
+    --base0E: #999999;
+    --base0F: #444444;  */
+    background-color: var(--base00);
+}
+
+.App {
+    padding: 30px;
+}
+
+a {
+    color: var(--base09);
+}
+
+h1, h2, h3 {
+    color: var(--base0D);
+}
+
+input[type="text"] {
+    padding: 5px;
+    font-size: 16px;
+    background-color: var(--base00);
+    color: var(--base05);
+    border: solid 1px var(--base02);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+input[type="submit"] {
+    padding: 5px;
+    font-size: 16px;
+    background-color: var(--base01);
+    color: var(--base05);
+    border: solid 1px var(--base02);
+}
+input[type="submit"]:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+input[type="button"] {
+    padding: 5px;
+    font-size: 16px;
+    background-color: var(--base00);
+    color: var(--base05);
+    border: solid 1px var(--base02);
+}
+input[type="button"]:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
