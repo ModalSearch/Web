@@ -6,8 +6,6 @@ import Inspector from 'react-json-inspector';
 
 import '../styles/json_inspector.css';
 
-let api_url = window.apiurl ? window.apiurl : 'http://localhost:5000'
-window.api_url = api_url;
 
 function pformat(obj) {
     if (Array.isArray(obj)) {
@@ -51,7 +49,7 @@ class Summary extends React.Component {
         };
     }
     componentDidMount() {
-        fetch(`${window.api_url}/summary?query=${this.props.query}`).then(response => response.json()).then(data => this.setState({ data }));
+        fetch(`${this.props.api_url}/summary?query=${this.props.query}`).then(response => response.json()).then(data => this.setState({ data }));
     }
 
 
@@ -138,7 +136,7 @@ class ItemList extends React.Component {
 
     componentDidMount() {
         const { query } = this.state;
-        fetch(`${window.api_url}/query?query=${query}`).then(response => response.json()).then(data => this.setState({ data }));
+        fetch(`${this.props.api_url}/query?query=${query}`).then(response => response.json()).then(data => this.setState({ data }));
     }
 
     render() {
@@ -191,7 +189,7 @@ class QueryControls extends React.Component {
 }
 
 
-export default function QueryView() {
+export default function QueryView(props) {
 
     console.log('>>', useLocation().search);
     const params = queryString.parse(useLocation().search);
@@ -202,8 +200,8 @@ export default function QueryView() {
             <h1>Query View</h1>
             <QueryControls query={params.query}></QueryControls>
             <h2>Summary</h2>
-            <Summary query={params.query}></Summary>
+            <Summary query={params.query} api_url={props.api_url}></Summary>
             <h2>Results</h2>
-            <ItemList query={params.query} />
+            <ItemList query={params.query} api_url={props.api_url} />
         </div>);
 }

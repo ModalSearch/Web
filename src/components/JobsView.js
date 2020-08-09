@@ -25,7 +25,7 @@ class JobForm extends React.Component {
             }}>
                 <h2>New Job:</h2>
                 <form onSubmit={(evt) => {
-                    fetch(`${window.api_url}/add_job?instructions=${encodeURIComponent(this.state.instructions)}`);
+                    fetch(`${this.props.api_url}/add_job?instructions=${encodeURIComponent(this.state.instructions)}`);
                     evt.preventDefault();
                 }}>
                     <input type="text" placeholder="Instructions" onChange={(e) => { this.setState({ instructions: e.target.value }) }} value={this.state.instructions} />
@@ -78,14 +78,14 @@ export default class JobsView extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`${window.api_url}/all_jobs`).then(response => response.json()).then(data => this.setState({ data }));
+        fetch(`${this.props.api_url}/all_jobs`).then(response => response.json()).then(data => this.setState({ data }));
     }
 
     render() {
         return (
             <div>
                 <h1>Jobs</h1>
-                <JobForm></JobForm>
+                <JobForm api_url={this.props.api_url}></JobForm>
                 {this.state.data === undefined ? <div>Loading Jobs...</div> :
                     <table style={{
                         borderCollapse: 'collapse',
