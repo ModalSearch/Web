@@ -35,7 +35,7 @@ class App extends React.Component {
                         color: 'var(--base03)',
                         fontSize: 14
                     }}>
-                        API Source: <a href={api_url} style={{color: 'var(--base03)'}}>{api_url}</a>
+                        Endpoint: <a href={api_url} style={{color: 'var(--base03)'}}>{api_url}</a>
                     </span>
                     <span style={{
                         textAlign: 'right',
