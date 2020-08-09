@@ -6,6 +6,8 @@ import Inspector from 'react-json-inspector';
 
 import '../styles/json_inspector.css';
 
+let api_url = window.apiurl ? window.apiurl : 'http://localhost:5000'
+window.api_url = api_url;
 
 function pformat(obj) {
     if (Array.isArray(obj)) {
@@ -22,7 +24,6 @@ function pformat(obj) {
                 padding: 10,
                 backgroundColor: 'var(--base00)',
             }}>
-                {/* <JSONTree hideRoot={true} data={obj} theme={json_theme} invertTheme={false} /> */}
                 <Inspector data={obj} search={false} />
 
             </div>
@@ -50,7 +51,7 @@ class Summary extends React.Component {
         };
     }
     componentDidMount() {
-        fetch(`http://localhost:5000/summary?query=${this.props.query}`).then(response => response.json()).then(data => this.setState({ data }));
+        fetch(`${window.api_url}/summary?query=${this.props.query}`).then(response => response.json()).then(data => this.setState({ data }));
     }
 
 
@@ -137,7 +138,7 @@ class ItemList extends React.Component {
 
     componentDidMount() {
         const { query } = this.state;
-        fetch(`http://localhost:5000/query?query=${query}`).then(response => response.json()).then(data => this.setState({ data }));
+        fetch(`${window.api_url}/query?query=${query}`).then(response => response.json()).then(data => this.setState({ data }));
     }
 
     render() {

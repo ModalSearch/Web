@@ -2,6 +2,10 @@
 import React from 'react';
 
 
+let api_url = window.apiurl ? window.apiurl : 'http://localhost:5000'
+window.api_url = api_url;
+
+
 class JobForm extends React.Component {
 
     constructor(props) {
@@ -21,7 +25,7 @@ class JobForm extends React.Component {
             }}>
                 <h2>New Job:</h2>
                 <form onSubmit={(evt) => {
-                    fetch(`http://localhost:5000/add_job?instructions=${encodeURIComponent(this.state.instructions)}`);
+                    fetch(`${window.api_url}/add_job?instructions=${encodeURIComponent(this.state.instructions)}`);
                     evt.preventDefault();
                 }}>
                     <input type="text" placeholder="Instructions" onChange={(e) => { this.setState({ instructions: e.target.value }) }} value={this.state.instructions} />
@@ -51,10 +55,10 @@ function Job(jid, instructions, status, timestamp) {
             <td>
                 {status == 'todo' ?
                     <input style={{ width: 75, color: 'var(--base08)' }} type="button" value="Cancel" onClick={() => {
-                        fetch(`http://localhost:5000/cancel_job/${jid}`);
+                        fetch(`${window.api_url}/cancel_job/${jid}`);
                     }}></input> :
                     <input style={{ width: 75, color: 'var(--base0D)' }} type="button" value="Clone" onClick={() => {
-                        fetch(`http://localhost:5000/add_job?instructions=${encodeURIComponent(instructions)}`);
+                        fetch(`${window.api_url}/add_job?instructions=${encodeURIComponent(instructions)}`);
                     }}></input>
                 }
             </td>
@@ -74,7 +78,7 @@ export default class JobsView extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:5000/all_jobs`).then(response => response.json()).then(data => this.setState({ data }));
+        fetch(`${window.api_url}/all_jobs`).then(response => response.json()).then(data => this.setState({ data }));
     }
 
     render() {
