@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, useLocation, useHistory } from "react-router-dom";
 import queryString from 'query-string';
-import JSONTree from 'react-json-tree'
 import Inspector from 'react-json-inspector';
 
 import '../styles/json_inspector.css';
@@ -191,7 +190,6 @@ class QueryControls extends React.Component {
 
 export default function QueryView(props) {
 
-    console.log('>>', useLocation().search);
     const params = queryString.parse(useLocation().search);
     return (
         <div style={{
