@@ -1,8 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Route, useLocation, useHistory } from "react-router-dom";
-import queryString from 'query-string';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import JobsView from './components/JobsView';
 import QueryView from './components/QueryView';
@@ -14,7 +12,7 @@ class App extends React.Component {
         super(props);
         console.log(window.location.href);
         this.state = {
-            api_url: window.location.href.startsWith('http://localhost') ? 'http://localhost:5000' : 'https://modalsearchlb-2065190492.us-west-2.elb.amazonaws.com'
+            api_url: window.location.href.startsWith('http://localhost') ? 'http://localhost:5000' : 'https://api.modalsearch.com'
         };
 
     }
