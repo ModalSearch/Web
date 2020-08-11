@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import JobsView from './components/JobsView';
 import QueryView from './components/QueryView';
+import SearchView from './components/SearchView';
 
 
 class App extends React.Component {
@@ -38,12 +39,13 @@ class App extends React.Component {
                     <span style={{
                         textAlign: 'right',
                     }}>
+                        <a href='/' style={styles.headerLink}>Search</a>
                         <a href='/q?query=true' style={styles.headerLink}>All Data</a>
                         <a href='/jobs' style={styles.headerLink}>Jobs</a>
                     </span>
                 </div>
                 <Router>
-                    <Route path="/" exact render={() => <div>Home page</div>} />
+                    <Route path="/" exact render={() => <SearchView api_url={api_url} />} />
                     <Route path="/q" render={() => <QueryView api_url={api_url}/>} />
                     <Route path="/jobs" exact render={() => <JobsView api_url={api_url}/>} />
                 </Router>
