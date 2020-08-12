@@ -1,31 +1,33 @@
 
 import React from 'react';
 import Inspector from 'react-json-inspector';
-import '../styles/json_inspector.css';
+// import '../styles/json_inspector.css';
+import ReactJson from 'react-json-view'
+// import JSONTree from 'react-json-tree'
 
-function DataItem(data_obj) {
+function DataItem(data_obj, theme) {
     const { data_id, timestamp, url, json_data } = data_obj;
     return (
         <div key={data_id} style={{
-            // marginTop: 10,
-            backgroundColor: 'var(--base01)',
+            backgroundColor: theme.base01,
             padding: 10,
-            color: 'var(--base05)',
-            border: 'solid 1px var(--base02)',
+            color: theme.base05,
+            border: 'solid 1px',
+            borderColor: theme.base02,
             borderBottom: 'none',
             borderCollapse: 'collapse'
         }}>
             <div>
-                <a aria-label="id" style={{color: 'var(--base0D)', textDecoration: 'none'}} href={`/q?query=data_id = ${data_id}`}>@{data_id}</a><br />
+                <a aria-label="id" style={{color: theme.base0D, textDecoration: 'none'}} href={`/q?query=data_id = ${data_id}`}>@{data_id}</a><br />
                 <span aria-label="timestamp">{timestamp}</span><br />
                 <a aria-label="url" href={`/q?query=url = '${url}'`}>{url}</a>
             </div>
             <div style={{
                 padding: 10,
-                backgroundColor: 'var(--base00)',
+                backgroundColor: theme.base00,
                 overflow: "hidden"
             }}>
-                <Inspector data={json_data} search={false} />
+                <ReactJson name={false} enableClipboard={false} theme={theme} src={json_data}/>
             </div>
         </div>
     )
@@ -39,7 +41,7 @@ export default function ItemList (props) {
         }
         return (
             <div>
-                {props.data.map(DataItem)}
+                {props.data.map((x) => DataItem(x, props.theme))}
             </div>
         );
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, useLocation, useHistory } from "react-router-dom";
 import queryString from 'query-string';
-import Inspector from 'react-json-inspector';
+import ReactJson from 'react-json-view'
 
 import ItemList from './ItemList';
 
 import '../styles/json_inspector.css';
 
 
-function pformat(obj) {
+function pformat(obj, theme) {
     if (Array.isArray(obj)) {
         if (obj.length === 1) {
             return pformat(obj[0]);
@@ -23,7 +23,7 @@ function pformat(obj) {
                 padding: 10,
                 backgroundColor: 'var(--base00)',
             }}>
-                <Inspector data={obj} search={false} />
+                <ReactJson enableClipboard={false} theme={theme} src={obj}/>
 
             </div>
         }
@@ -73,7 +73,7 @@ function Summary(props) {
                             <td style={{
                                 padding: 10,
                                 // flex: 1
-                            }}>{pformat(summary_object[key])}</td>
+                            }}>{pformat(summary_object[key], props.theme)}</td>
                         </tr>)}
                 </tbody>
             </table>
@@ -101,13 +101,14 @@ export default class QueryView extends React.Component {
     }
 
     render() {
+        const { theme } = this.props;
         return (
             <div style={{
-                color: 'var(--base05)'
+                color: theme.base05,
             }}>
                 <h1>Query View</h1>
                 <div style={{
-                    backgroundColor: 'var(--base01)',
+                    backgroundColor: theme.base01,
                     padding: 10,
                     marginTop: 10,
                     marginBottom: 10
@@ -128,9 +129,9 @@ export default class QueryView extends React.Component {
                     </form>
                 </div>
                 <h2>Summary</h2>
-                <Summary data={this.state.summary_data}/>
+                <Summary theme={theme} data={this.state.summary_data}/>
                 <h2>Results</h2>
-                <ItemList data={this.state.view_data}/>
+                <ItemList theme={theme} data={this.state.view_data}/>
             </div>
         );
     }
