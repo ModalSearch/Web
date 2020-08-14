@@ -16,20 +16,52 @@ class JobForm extends React.Component {
     }
 
     render() {
+        const { theme } = this.props;
         return (
             <div style={{
                 backgroundColor: 'var(--base01)',
                 padding: 5,
                 marginTop: 10,
-                marginBottom: 10
+                marginBottom: 10,
+                display: 'flex',
+                flexWrap: 'wrap'
             }}>
-                <h2>New Job:</h2>
-                <form onSubmit={(evt) => {
+                <h2 style={{width: '100%' }}>New Job:</h2>
+                <form style={{flex: 1,
+                    backgroundColor: theme.base02,
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around'
+                }} onSubmit={(evt) => {
                     fetch(`${this.props.api_url}/jobs/add?instructions=${encodeURIComponent(this.state.instructions)}`);
                     evt.preventDefault();
                 }}>
-                    <input type="text" placeholder="Instructions" onChange={(e) => { this.setState({ instructions: e.target.value }) }} value={this.state.instructions} />
-                    <input type="submit" value="Submit"></input>
+                    <input style={{
+                            flex: 10,
+                            padding: 10,
+                            width: '100%',
+                            minWidth: 400,
+                            display: 'block',
+                            backgroundColor: theme.base01,
+                            border: 'solid 1px',
+                            borderColor: theme.base03,
+                            fontSize: 16,
+                            color: theme.base05
+                        }}
+                            type="text" placeholder="Instructions" onChange={(e) => { this.setState({ instructions: e.target.value }) }} value={this.state.instructions} />
+                    <input style={{
+                        flex: 1,
+                        width: 75,
+                        maxWidth: 500,
+                        // margin: 10,
+                        padding: 5,
+                        // height: 30,
+                        backgroundColor: theme.base00,
+                        fontSize: 16,
+                        color: theme.base05,
+                        border: 'solid 1px',
+                        borderColor: theme.base03
+                        }} type="submit" value="Submit"></input>
                 </form>
             </div>
         );
@@ -53,7 +85,7 @@ function Job(jid, instructions, status, timestamp, theme) {
             <td style={{ ...styles.table_cell, color: theme.base05 }}>{timestamp}</td>
 
             <td>
-                {status == 'todo' ?
+                {status === 'todo' ?
                     <input style={{ width: 75, color: theme.base08 }} type="button" value="Cancel" onClick={() => {
                         fetch(`${window.api_url}/jobs/cancel/${jid}`);
                     }}></input> :

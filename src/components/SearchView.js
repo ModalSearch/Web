@@ -1,64 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import socketIOClient from "socket.io-client";
-import ItemList from './ItemList';
-
+// import ItemList from './ItemList';
+import Result from './Result';
+import SchemaControls from './SchemaControls';
+import ResultsView from './ResultsView';
+import queryString from 'querystring';
 
 export default class SearchView extends React.Component {
 
     constructor(props) {
         super(props);
+        const query_params = queryString.parse(window.location.search.slice(1));
+        console.log('QP:', query_params.q)
         this.state = {
             response: undefined,
             inputActive: false,
             wsConnected: false,
             typingTimeout: 0,
-            query: '',
-            liveInput: '',
-            resultsData: [],
+            query: query_params.q !== undefined ? query_params.q : '',
+            liveInput: query_params.q !== undefined ? query_params.q : '',
+            resultsData: undefined,
         };
         this.socket = socketIOClient(this.props.api_url);
+        this.request_data();
     }
 
     componentDidMount() {
         this.socket.on('connect', () => {
             console.log('WS Connected.');
-            this.setState({wsConnected: true});
+            this.setState({ wsConnected: true });
         });
-        
+
         this.socket.on('disconnect', () => {
             console.log('WS Disconnected.');
-            this.setState({wsConnected: false});
+            this.setState({ wsConnected: false });
         });
-        
-        this.socket.on('search_data', (resultsData) => {
-            console.log(resultsData);
-            this.setState({resultsData});
+
+        this.socket.on('search_data', (response) => {
+            console.log('Recieved:', response);
+            this.setState({ resultsData: response});
         });
     }
 
     request_data() {
-        const { query } = this.state;
-        console.log('Fetching for:', query);
-        this.socket.emit('search', query);
+        const { query, activeSchema } = this.state;
+        console.log('Fetching for:', query, activeSchema);
+        this.socket.emit('search', {
+            query: query,
+            schema: activeSchema
+        });
     }
 
     render() {
         const { theme } = this.props;
+        const { resultsData } = this.state;
         return (
             <div>
                 <div style={{
-                    // backgroundColor: 'var(--base01)',
-                    backgroundColor: theme.base01,
+                    backgroundColor: theme.base02,
                     display: 'flex',
-                    flexWrap: 'wrap'
+                    flexWrap: 'wrap',
+                    padding: 10,
                 }}>
-                    <input autoFocus 
+                    <input autoFocus
                         type="text"
                         style={{
                             width: '100%',
                             display: 'block',
-                            margin: 10
-                         }} 
+                            // margin: 10,
+                            padding: 5,
+                            backgroundColor: theme.base01,
+                            border: 'solid 1px',
+                            borderColor: theme.base03,
+                            fontSize: 16,
+                            color: theme.base05
+                        }}
                         onChange={(e) => {
                             if (this.state.typingTimeout) {
                                 clearTimeout(this.state.typingTimeout);
@@ -66,28 +82,27 @@ export default class SearchView extends React.Component {
                             this.setState({
                                 inputActive: false,
                                 typingTimeout: setTimeout(() => {
-                                    this.setState({query: this.state.liveInput});
+                                    this.setState({ query: this.state.liveInput });
                                     this.request_data();
                                 }, 500),
                                 liveInput: e.target.value
                             });
-                        }} 
+                        }}
                         value={this.state.liveInput}
                     />
                     <div style={{
-                        color: this.state.wsConnected ? theme.base03 : theme.base0F,
-                        marginRight: 10,
-                        marginBottom: 5,
+                        color: this.state.wsConnected ? theme.base04 : theme.base0F,
                         width: '100%',
-                        textAlign: 'right'
+                        textAlign: 'right',
+                        marginTop: 5
                     }}>
                         {this.state.wsConnected ? 'WS Connected' : 'Waiting to connect...'}
                     </div>
 
                 </div>
-                <div>
-                    <ItemList theme={theme} data={this.state.resultsData}/>
-                </div>
+                {resultsData === undefined ? <div>Loading...</div> :
+                    <ResultsView data={resultsData.data} schema={resultsData.schema} theme={theme} />
+                }
             </div>
         );
     }
