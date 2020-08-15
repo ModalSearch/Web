@@ -115,9 +115,9 @@ class App extends React.Component {
                         flex: 1,
                         color: themes.base03,
                         fontSize: 14,
-                        // margin: 10,
                         display: 'flex',
-                        flexDirection: 'row'
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
                     }}>
                         <span style={{alignSelf: 'center', marginRight: 10}}>Endpoint: <a href={api_url} style={{color: theme.base03}}>{api_url}</a></span>
 
