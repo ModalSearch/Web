@@ -22,7 +22,7 @@ class App extends React.Component {
         console.log(window.location.href);
         this.state = {
             api_url: window.location.href.startsWith('http://localhost') ? 'http://localhost:5000' : 'https://api.modalsearch.com',
-            theme_name: currTheme !== undefined ? currTheme : 'ocean'
+            theme_name: currTheme !== undefined ? currTheme : 'materia'
         };
     }
 

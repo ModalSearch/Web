@@ -1,8 +1,12 @@
 import React from 'react';
 
 const SchemaControls = ({baseSchema, activeSchema, theme, onChange}) => {
-    if (baseSchema.type !== 'object' || activeSchema.type !== 'object') {
-        throw Error('Cannot yet handle non-object Schemas!');
+    if (baseSchema.type !== 'object') {
+        console.error('- Unknown schema:', baseSchema);
+        return <div style={{
+            padding: 5,
+            color: theme.base0F
+        }}>Unknown Schema, check console!</div>
     }
     return (
         <div style={{
@@ -14,7 +18,7 @@ const SchemaControls = ({baseSchema, activeSchema, theme, onChange}) => {
                         <input
                             name={prop_name}
                             type="checkbox"
-                            checked={activeSchema.required.indexOf(prop_name) !== -1}
+                            checked={Object.keys(activeSchema.properties).indexOf(prop_name) !== -1}
                             onChange={onChange}
                             />
                         {prop_name}

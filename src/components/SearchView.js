@@ -3,7 +3,7 @@ import socketIOClient from "socket.io-client";
 // import ItemList from './ItemList';
 import Result from './Result';
 import SchemaControls from './SchemaControls';
-import ResultsView from './ResultsView';
+// import ResultsView from './ResultsView';
 import queryString from 'querystring';
 
 export default class SearchView extends React.Component {
@@ -19,7 +19,9 @@ export default class SearchView extends React.Component {
             typingTimeout: 0,
             query: query_params.q !== undefined ? query_params.q : '',
             liveInput: query_params.q !== undefined ? query_params.q : '',
-            resultsData: undefined,
+            resultItems: [],
+            resultSchema: undefined,
+            viewSchema: undefined
         };
         this.socket = socketIOClient(this.props.api_url);
         this.request_data();
@@ -38,7 +40,12 @@ export default class SearchView extends React.Component {
 
         this.socket.on('search_data', (response) => {
             console.log('Recieved:', response);
-            this.setState({ resultsData: response});
+            this.setState({
+                resultItems: response.data,
+                resultSchema: response.schema,
+                viewSchema: response.schema
+            });
+            window.history.replaceState( {} , 'Modal Search', `/?q=${response.original_query}` );
         });
     }
 
@@ -53,7 +60,7 @@ export default class SearchView extends React.Component {
 
     render() {
         const { theme } = this.props;
-        const { resultsData } = this.state;
+        const { resultItems, resultSchema, viewSchema } = this.state;
         return (
             <div>
                 <div style={{
@@ -100,8 +107,31 @@ export default class SearchView extends React.Component {
                     </div>
 
                 </div>
-                {resultsData === undefined ? <div>Loading...</div> :
-                    <ResultsView data={resultsData.data} schema={resultsData.schema} theme={theme} />
+                {resultSchema === undefined || resultItems === undefined ? <div>Loading...</div> :
+                    (resultItems.length > 0 ? 
+                        <div>
+                        <SchemaControls baseSchema={resultSchema} activeSchema={viewSchema} theme={theme}
+                        onChange={(e) => {
+                            let ns = JSON.parse(JSON.stringify(viewSchema))
+                            if (!e.target.checked) {
+                                console.log(e.target.name)
+                                delete ns.properties[e.target.name]
+                            } else {
+                                ns.properties[e.target.name] = resultSchema.properties[e.target.name]
+                            }
+                            this.setState({
+                                viewSchema: ns
+                            })
+                        }}/>
+                        {resultItems.slice(0,50).map((item) => <Result key={item.id} item={item} theme={theme} schema={viewSchema}></Result>)}
+                    </div> :
+                        <div style={{
+                            paddingTop: 30,
+                            width: '100%',
+                            textAlign: 'center',
+                            verticalAlign: 'center'
+                        }}>No Results :(</div>
+                    )
                 }
             </div>
         );
