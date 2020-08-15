@@ -15,6 +15,7 @@ export default class SearchView extends React.Component {
         this.state = {
             response: undefined,
             inputActive: false,
+            inputFocussed: false,
             wsConnected: false,
             typingTimeout: 0,
             query: query_params.q !== undefined ? query_params.q : '',
@@ -45,7 +46,11 @@ export default class SearchView extends React.Component {
                 resultSchema: response.schema,
                 viewSchema: response.schema
             });
-            window.history.replaceState( {} , 'Modal Search', `/?q=${response.original_query}` );
+            if (response.original_query.trim() !== '') {
+                window.history.replaceState( {} , 'Modal Search', `/?q=${response.original_query}` );
+            } else {
+                window.history.replaceState( {} , 'Modal Search', '/' );
+            }
         });
     }
 
@@ -60,7 +65,7 @@ export default class SearchView extends React.Component {
 
     render() {
         const { theme } = this.props;
-        const { resultItems, resultSchema, viewSchema } = this.state;
+        const { resultItems, resultSchema, viewSchema, inputFocussed } = this.state;
         return (
             <div>
                 <div style={{
@@ -71,17 +76,21 @@ export default class SearchView extends React.Component {
                 }}>
                     <input autoFocus
                         type="text"
+                        onFocus={() => this.setState({inputFocussed: true})}
+                        onBlur={() => this.setState({inputFocussed: false})}
                         style={{
                             width: '100%',
                             display: 'block',
-                            // margin: 10,
                             padding: 5,
                             backgroundColor: theme.base01,
                             border: 'solid 1px',
-                            borderColor: theme.base03,
+                            borderColor: theme.base00,
+                            outlineStyle: inputFocussed ? 'solid' : 'none',
+                            outlineColor: theme.base03,
                             fontSize: 16,
                             color: theme.base05
                         }}
+                        
                         onChange={(e) => {
                             if (this.state.typingTimeout) {
                                 clearTimeout(this.state.typingTimeout);
