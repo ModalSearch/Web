@@ -9,7 +9,7 @@ const format_item_value = (value, theme) => {
     } else if (value instanceof Number) {
         return <span style={{color: theme.base09}}>{value}</span>
     } else if (value instanceof Array) {
-        return <span><pre style={{color: theme.base0C}}>{JSON.stringify(value)}</pre></span>
+        return <span><pre style={{whiteSpace: 'normal', color: theme.base0C}}>{JSON.stringify(value)}</pre></span>
     }
 };
 
