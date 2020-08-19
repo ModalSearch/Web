@@ -9,6 +9,7 @@
     "@wojtekmaj/react-timerange-picker": "^3.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
     "react-json-inspector": "^7.1.1",
     "react-json-pretty": "^2.2.0",
     "react-json-tree": "^0.12.0",

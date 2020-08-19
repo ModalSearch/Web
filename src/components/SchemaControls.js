@@ -11,15 +11,16 @@ const SchemaControls = ({baseSchema, activeSchema, theme, onChange}) => {
     return (
         <div style={{
             display: "flex",
-            backgroundColor: theme.base02,
+            backgroundColor: theme.base00,
             flexWrap: 'wrap',
             justifyContent: 'start',
         }}>
-            {Object.keys(baseSchema.properties).map((prop_name) => {
+            {Object.keys(baseSchema.properties).map((prop_name, idx) => {
                 return (
                     <label key={prop_name}
                     style={{
                             margin: 5,
+                            marginLeft: idx == 0 ? 0 : 5,
                             padding: 5,
                             border: 'solid 1px',
                             borderRadius: 3,

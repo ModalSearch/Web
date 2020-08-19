@@ -5,6 +5,7 @@ import Result from './Result';
 import SchemaControls from './SchemaControls';
 // import ResultsView from './ResultsView';
 import queryString from 'querystring';
+import '../styles/loader.css';
 
 export default class SearchView extends React.Component {
 
@@ -47,9 +48,9 @@ export default class SearchView extends React.Component {
                 viewSchema: response.schema
             });
             if (response.original_query.trim() !== '') {
-                window.history.replaceState( {} , 'Modal Search', `/?q=${response.original_query}` );
+                window.history.replaceState({}, 'Modal Search', `/?q=${response.original_query}`);
             } else {
-                window.history.replaceState( {} , 'Modal Search', '/' );
+                window.history.replaceState({}, 'Modal Search', '/');
             }
         });
     }
@@ -73,24 +74,28 @@ export default class SearchView extends React.Component {
                     display: 'flex',
                     flexWrap: 'wrap',
                     padding: 10,
+                    paddingBottom: 10
                 }}>
                     <input autoFocus
                         type="text"
-                        onFocus={() => this.setState({inputFocussed: true})}
-                        onBlur={() => this.setState({inputFocussed: false})}
+                        onFocus={() => this.setState({ inputFocussed: true })}
+                        onBlur={() => this.setState({ inputFocussed: false })}
                         style={{
                             width: '100%',
                             display: 'block',
                             padding: 5,
                             backgroundColor: theme.base01,
                             border: 'solid 1px',
-                            borderColor: theme.base00,
-                            outlineStyle: inputFocussed ? 'solid' : 'none',
+                            borderColor: this.state.wsConnected ? theme.base00 : theme.base0F,
+                            outlineStyle: inputFocussed && this.state.wsConnected ? 'solid' : 'none',
                             outlineColor: theme.base03,
-                            fontSize: 16,
-                            color: theme.base05
+                            fontSize: 18,
+                            borderRadius: 3,
+                            color: theme.base05,
+                            pointerEvents: this.state.wsConnected ? 'auto' : 'none'
                         }}
-                        
+                        placeholder={!this.state.wsConnected ? "Connecting..." : "Search"}
+                        readOnly={!this.state.wsConnected}
                         onChange={(e) => {
                             if (this.state.typingTimeout) {
                                 clearTimeout(this.state.typingTimeout);
@@ -106,42 +111,41 @@ export default class SearchView extends React.Component {
                         }}
                         value={this.state.liveInput}
                     />
-                    <div style={{
-                        color: this.state.wsConnected ? theme.base04 : theme.base0F,
-                        width: '100%',
-                        textAlign: 'right',
-                        marginTop: 5
-                    }}>
-                        {this.state.wsConnected ? 'WS Connected' : 'Waiting to connect...'}
-                    </div>
-
                 </div>
-                {resultSchema === undefined || resultItems === undefined ? <div>Loading...</div> :
-                    (resultItems.length > 0 ? 
-                        <div>
-                        <SchemaControls baseSchema={resultSchema} activeSchema={viewSchema} theme={theme}
-                        onChange={(e) => {
-                            let ns = JSON.parse(JSON.stringify(viewSchema))
-                            if (!e.target.checked) {
-                                console.log(e.target.name)
-                                delete ns.properties[e.target.name]
-                            } else {
-                                ns.properties[e.target.name] = resultSchema.properties[e.target.name]
-                            }
-                            this.setState({
-                                viewSchema: ns
-                            })
-                        }}/>
-                        {resultItems.slice(0,50).map((item) => <Result key={item.id} item={item} theme={theme} schema={viewSchema}></Result>)}
-                    </div> :
-                        <div style={{
-                            paddingTop: 30,
-                            width: '100%',
-                            textAlign: 'center',
-                            verticalAlign: 'center'
-                        }}>No Results :(</div>
-                    )
-                }
+                <div style={{padding: 10, paddingTop: 0}}>
+                    {resultSchema === undefined || resultItems === undefined ? (
+                        <div style={{width: '100%', textAlign: 'center'}}>
+                            {this.state.wsConnected ? (
+                                <div className="lds">{[...Array(3).keys()].map(_ => <div style={{background: theme.base02}}></div>)}</div>
+                            ) : <div>Waiting to connect...</div>}
+                        </div>
+                    ) :
+                        (resultItems.length > 0 ?
+                            <div>
+                                <SchemaControls baseSchema={resultSchema} activeSchema={viewSchema} theme={theme}
+                                    onChange={(e) => {
+                                        let ns = JSON.parse(JSON.stringify(viewSchema))
+                                        if (!e.target.checked) {
+                                            console.log(e.target.name)
+                                            delete ns.properties[e.target.name]
+                                        } else {
+                                            ns.properties[e.target.name] = resultSchema.properties[e.target.name]
+                                        }
+                                        this.setState({
+                                            viewSchema: ns
+                                        })
+                                    }} />
+                                {resultItems.slice(0, 50).map((item) => <Result key={item.id} item={item} theme={theme} schema={viewSchema}></Result>)}
+                            </div> :
+                            <div style={{
+                                paddingTop: 30,
+                                width: '100%',
+                                textAlign: 'center',
+                                verticalAlign: 'center'
+                            }}>No Results :(</div>
+                        )
+                    }
+                </div>
             </div>
         );
     }

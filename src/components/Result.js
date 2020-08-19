@@ -18,12 +18,18 @@ const Result = ({item, theme, schema}) => {
     return (
         <div style={{
             backgroundColor: theme.base01,
-            padding: 5,
-            marginBottom: 10
+            padding: 10,
+            marginBottom: 10,
+            display: 'flex',
+            flexWrap: 'wrap',
+            border: 'solid 1px',
+            borderColor: theme.base00,
+            borderRadius: 3,
         }}>
             <div style={{
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                width: '100%',
             }}>
                 <span style={{
                     color: theme.base0D
@@ -41,7 +47,7 @@ const Result = ({item, theme, schema}) => {
                     {Object.keys(schema.properties).map(prop_name => {
                         console.log(item.data[prop_name]);
                         return (
-                            <tr key={prop_name}>
+                            <tr key={prop_name} style={{padding: 0}}>
                                 <td style={{color: theme.base04}}>
                                     {prop_name}
                                 </td>
@@ -54,6 +60,9 @@ const Result = ({item, theme, schema}) => {
                     })}
                 </tbody>
             </table>
+            <span style={{alignSelf: 'flex-end', whiteSpace: 'nowrap', minWidth: 300, flex: 1, textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                <a style={{color: theme.base09, textOverflow: 'ellipsis'}} href={`/?q=${item.source}`}>{item.source}</a>
+            </span>
         </div>
     );
 }
