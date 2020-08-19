@@ -42,16 +42,16 @@ const Result = ({item, theme, schema}) => {
                     {item.timestamp}
                 </span>
             </div>
-            <table>
+            <table style={{display: 'flex'}}>
                 <tbody>
                     {Object.keys(schema.properties).map(prop_name => {
                         console.log(item.data[prop_name]);
                         return (
-                            <tr key={prop_name} style={{padding: 0}}>
+                            <tr key={prop_name} style={{padding: 0, maxHeight: 300, overflow: 'scroll' }}>
                                 <td style={{color: theme.base04}}>
                                     {prop_name}
                                 </td>
-                                <td>
+                                <td style={{minWidth: 10, wordBreak: 'break-word'}}>
                                     {format_item_value(item.data[prop_name], theme)}
                                     {/* <JSONPretty id="json-pretty" data={item.data[prop_name]}></JSONPretty> */}
                                 </td>

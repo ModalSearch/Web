@@ -116,7 +116,7 @@ class App extends React.Component {
                         <a href='/' style={headerLinkStyle}>Search</a>
                         <a href='/jobs' style={headerLinkStyle}>Jobs</a>
                         <GiSettingsKnobs style={{
-                            fill: theme.base03,
+                            fill: this.state.settingsOpen ? theme.base08 : theme.base03,
                             verticalAlign: 'middle'
                         }} onClick={(e) => this.setState({settingsOpen: !this.state.settingsOpen})}/>
                         {/* <span onClick={(e) => this.setState({settingsOpen: !this.state.settingsOpen})} style={headerLinkStyle}>Settings</span> */}
