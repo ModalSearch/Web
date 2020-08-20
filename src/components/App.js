@@ -104,10 +104,10 @@ class App extends React.Component {
                     flexDirection: 'row',
                     flexWrap: 'wrap-reverse',
                     justifyContent: 'space-between',
-                    backgroundColor: theme.base02,
+                    backgroundColor: theme.base01,
                     padding: 10
                 }}>
-                    <Tarot style={{ fill: theme.base0A }} height={30} width={30} />
+                    <Tarot style={{ fill: theme.base0A }} height={30} width={35} />
                     <span style={{
                         fontSize: 18,
                         alignSelf: 'center',
@@ -143,7 +143,6 @@ class App extends React.Component {
                             <Select
                                 value={theme_options.filter(option => option.label === theme_name)}
                                 styles={customSelectStyles} options={theme_options} onChange={(e) => {
-                                    console.log('theme:', e)
                                     this.setState({ theme_name: e.value });
                                     cookies.set('modalsearch_theme', e.value, { path: '/' });
                                 }} />
