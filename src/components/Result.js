@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactJson from 'react-json-view'
-
 
 const format_item_value = (value, theme) => {
-    // console.log('>>>', value);
     if (typeof value === 'string') {
         return <span style={{color: theme.base0B}}>{value}</span>
     } else if (value instanceof Number) {
@@ -14,12 +11,11 @@ const format_item_value = (value, theme) => {
 };
 
 
-const Result = ({data, theme, schema}) => {
+const Result = ({timestamp, source, data, theme}) => {
     return (
         <div style={{
             backgroundColor: theme.base00,
             padding: 5,
-            // margin: 10,
             marginBottom: 5,
             display: 'flex',
             flexWrap: 'wrap',
@@ -33,20 +29,20 @@ const Result = ({data, theme, schema}) => {
                 width: '100%',
             }}>
                 <span style={{
-                    color: theme.base0D
-                }}>
-                    {/* @{item.id} */}
-                </span>
-                <span style={{
                     color: theme.base03
                 }}>
-                    {/* {item.timestamp} */}
+                    {timestamp}
                 </span>
+                <span style={{
+                    color: theme.base0D
+                }}>
+                    <a style={{color: theme.base09, textOverflow: 'ellipsis'}} href={`/?q=${source}`}>view source</a>
+                </span>
+
             </div>
             <table style={{display: 'flex'}}>
                 <tbody>
-                    {Object.keys(schema.properties).map(prop_name => {
-                        // console.log(data[prop_name]);
+                    {Object.keys(data).map(prop_name => {
                         return (
                             <tr key={prop_name} style={{padding: 0, maxHeight: 300, overflow: 'scroll' }}>
                                 <td style={{color: theme.base04}}>
@@ -54,16 +50,15 @@ const Result = ({data, theme, schema}) => {
                                 </td>
                                 <td style={{minWidth: 10, wordBreak: 'break-word'}}>
                                     {format_item_value(data[prop_name], theme)}
-                                    {/* <JSONPretty id="json-pretty" data={item.data[prop_name]}></JSONPretty> */}
                                 </td>
                             </tr>
                         );
                     })}
                 </tbody>
             </table>
-            <span style={{alignSelf: 'flex-end', whiteSpace: 'nowrap', minWidth: 300, flex: 1, textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis'}}>
-                {/* <a style={{color: theme.base09, textOverflow: 'ellipsis'}} href={`/?q=${item.source}`}>{item.source}</a> */}
-            </span>
+            {/* <span style={{alignSelf: 'flex-end', whiteSpace: 'nowrap', minWidth: 300, flex: 1, textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+                <a style={{color: theme.base09, textOverflow: 'ellipsis'}} href={`/?q=${source}`}>view source</a>
+            </span> */}
         </div>
     );
 }

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import socketIOClient from "socket.io-client";
-// import ItemList from './ItemList';
-import Result from './Result';
-import SchemaControls from './SchemaControls';
-// import ResultsView from './ResultsView';
+
+import ResultsView from './ResultsView';
 import queryString from 'querystring';
 import '../styles/loader.css';
 
@@ -108,22 +106,12 @@ export default class SearchView extends React.Component {
                         value={this.state.liveInput}
                     />
                 </div>
-                <div>
-                    {resultGroups.map(group => {
-                        return (
-                            <div style={{backgroundColor: theme.base01, padding: 10, margin: 10}}>
-                                <div style={{marginBottom: 5}}>
-                                    <h3 style={{margin: 0, marginBottom: 5}}>{group.name}</h3>
-                                    <span>{group.members.length} items.</span>
-                                </div>
-                                {group.members.map(result_item => {
-                                    return (
-                                        <Result key={result_item.id} data={result_item} theme={theme} schema={group.schema}></Result>
-                                    );
-                                })}
-                            </div>
-                        );
-                    })}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    padding: 10
+                }}>
+                    <ResultsView theme={theme} data={resultGroups}/>
                 </div>
             </div>
         );
