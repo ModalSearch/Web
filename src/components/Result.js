@@ -15,9 +15,10 @@ const format_item_value = (value, theme) => {
 const Result = ({timestamp, source, data, theme}) => {
     return (
         <div style={{
-            backgroundColor: theme.base01,
+            backgroundColor: theme.base00,
             padding: 5,
-            marginBottom: 5,
+            marginRight: 10,
+            // marginBottom: ,
             display: 'flex',
             flexWrap: 'wrap',
             border: 'solid 1px',

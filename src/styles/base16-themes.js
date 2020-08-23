@@ -1,4 +1,24 @@
 const themes = {
+    "modalsearch-light": {
+        "scheme": "ModalSearch Light",
+        "author": "Max S",
+        "base00": "white",
+        "base01": "#E3DCC2",
+        "base02": "#979db4",
+        "base03": "#C6CCE6",
+        "base04": "#6b7394",
+        "base05": "#3B4054",
+        "base06": "#333848",
+        "base07": "#202746",
+        "base08": "#c94922",
+        "base09": "#6F584B",
+        "base0A": "#1C448E",
+        "base0B": "#15795F",
+        "base0C": "#22a2c9",
+        "base0D": "#3d8fd1",
+        "base0E": "#6679cc",
+        "base0F": "#9c637a"
+      },
     "rebecca": {
       "scheme": "Rebecca",
       "author": "Victor Borja (http://github.com/vic) based on Rebecca Theme (http://github.com/vic/rebecca-theme)",
