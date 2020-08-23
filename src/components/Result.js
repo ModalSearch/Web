@@ -1,4 +1,5 @@
 import React from 'react';
+import { BsBoxArrowUpRight } from 'react-icons/bs';
 
 const format_item_value = (value, theme) => {
     if (typeof value === 'string') {
@@ -14,7 +15,7 @@ const format_item_value = (value, theme) => {
 const Result = ({timestamp, source, data, theme}) => {
     return (
         <div style={{
-            backgroundColor: theme.base00,
+            backgroundColor: theme.base01,
             padding: 5,
             marginBottom: 5,
             display: 'flex',
@@ -22,10 +23,15 @@ const Result = ({timestamp, source, data, theme}) => {
             border: 'solid 1px',
             borderColor: theme.base00,
             borderRadius: 3,
+            transitionDuration: 1
+        }}
+        onClick={() => {
+            console.log(source);
         }}>
             <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
+                // flexDirection: 'row-reverse',
                 width: '100%',
             }}>
                 <span style={{
@@ -36,7 +42,7 @@ const Result = ({timestamp, source, data, theme}) => {
                 <span style={{
                     color: theme.base0D
                 }}>
-                    <a style={{color: theme.base09, textOverflow: 'ellipsis'}} href={`/?q=${source}`}>view source</a>
+                    <a style={{color: theme.base09, textOverflow: 'ellipsis'}} href={`/?q=${source}`}><BsBoxArrowUpRight/></a>
                 </span>
 
             </div>

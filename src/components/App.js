@@ -114,7 +114,7 @@ class App extends React.Component {
                         cursor: 'pointer'
                     }}>
                         <a href='/' style={headerLinkStyle}>Search</a>
-                        <a href='/jobs' style={headerLinkStyle}>Jobs</a>
+                        {/* <a href='/jobs' style={headerLinkStyle}>Jobs</a> */}
                         <GiSettingsKnobs style={{
                             fill: this.state.settingsOpen ? theme.base08 : theme.base03,
                             verticalAlign: 'middle'
