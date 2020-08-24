@@ -13,7 +13,7 @@ function pretty_date(timestamp) {
 
 
 function Prop_val_list({ values, theme }) {
-    let parsed = values.map(v => [v[0], Date.parse(v[1])]);
+    let parsed = values.map(v => [v[0], moment(v[1])]);
     parsed.sort((a, b) => b[1] - a[1]);
     console.log('PARSED:', parsed);
     let last_val = null;
