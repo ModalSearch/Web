@@ -47,7 +47,7 @@ const ResultsView = ({ data, theme }) => {
                         return (
                             <div key={`item${idx}`}
                                 style={{
-                                    // backgroundColor: theme.base00,
+                                    backgroundColor: theme.base00,
                                     paddingTop: 5,
                                     paddingLeft: 5,
                                     borderRadius: 3,
@@ -63,7 +63,7 @@ const ResultsView = ({ data, theme }) => {
     return (
         <div style={{
             backgroundColor: theme.base01,
-            borderLeft: 'solid 2px',
+            // borderLeft: 'solid 2px',
             borderColor: data.type !== 'terminal' ? theme.base01 : theme.base00,
             flex: 1,
             borderTopLeftRadius: 3,

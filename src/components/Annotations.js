@@ -41,15 +41,13 @@ const Annotations = ({ data, theme }) => {
         <div style={{
             flex: 1,
             padding: 5,
-            overflow: 'scroll',
             overflowX: 'scroll',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            display: 'inline-block',
             verticalAlign: 'middle'
             }}>
             {data.map((anno, idx) => (
-                <span style={{color: theme.base03}} key={anno.link}>
+                <span style={{color: theme.base03, overflow: 'scroll'}} key={anno.link}>
                     <AnnoLink theme={theme} link={anno.link} text={anno.text} />
                     {idx < data.length - 1 ? <span style={{margin: 5, fontSize: 24}}>{"›"}</span> : null}
                 </span>

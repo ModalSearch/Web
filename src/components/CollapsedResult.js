@@ -155,7 +155,7 @@ export default class CollapsedResult extends React.Component {
                 bottom: 'auto',
                 padding: 10,
                 maxHeight: 500,
-                maxWidth: 900,
+                maxWidth: '80%',
                 marginRight: '-50%',
                 transform: 'translate(-50%, -50%)'
            }
@@ -169,6 +169,7 @@ export default class CollapsedResult extends React.Component {
                 borderColor: this.state.isHovered ? theme.base02 : theme.base01,
                 cursor: this.state.isHovered ? 'pointer' : 'auto',
                 padding: 3,
+                overflowX: 'hidden',
             }}
             onMouseEnter={() => {this.setState({isHovered: true})}} 
             onMouseLeave={() => {this.setState({isHovered: false})}} 
@@ -187,18 +188,20 @@ export default class CollapsedResult extends React.Component {
                         fontSize: 16,
                         whiteSpace: 'nowrap',
                         maxWidth: '50%',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
+                        // overflow: 'scroll',
+                        // textOverflow: 'ellipsis',
                         color: theme.base0D,
                         display: 'inline-block',
                         verticalAlign: 'middle',
                         margin: 0,
                         paddingRight: 5}}>{relkey.text}</h3> : null}
+                    {"›"}
                     {anno}
                 </div>
                 <table style={{
                     borderRadius: 5,
                     width: '100%',
+                    overflow: 'hidden',
                     flex: 1,
                     // backgroundColor: theme.base00,
                     padding: 5 }}>
