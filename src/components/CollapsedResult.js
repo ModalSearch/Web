@@ -5,11 +5,9 @@ import moment from 'moment';
 import Modal from 'react-modal';
 
 
-
-
 function pretty_date(timestamp) {
     const curr_time = moment(new Date().getTime());
-    const ts = moment(new Date(timestamp));
+    const ts = moment.utc(timestamp);
     return ts.from(curr_time);
 }
 
@@ -95,7 +93,7 @@ function Prop_val_list({ values, theme }) {
     let last_val = null;
     return (
         parsed.map(val_and_time => {
-            const val = JSON.stringify(val_and_time[0]);
+            const val = val_and_time[0];
             const timestamp = val_and_time[1];
             if (val !== last_val) {
                 last_val = val;
@@ -153,7 +151,7 @@ export default class CollapsedResult extends React.Component {
                 display: 'block',
                 right: 'auto',
                 bottom: 'auto',
-                padding: 10,
+                padding: 15,
                 maxHeight: 500,
                 maxWidth: '80%',
                 marginRight: '-50%',
@@ -199,7 +197,7 @@ export default class CollapsedResult extends React.Component {
                 </div>
                 <table style={{
                     borderRadius: 5,
-                    // width: '100%',
+                    width: '100%',
                     overflow: 'scroll',
                     flex: 1,
                     // backgroundColor: theme.base00,

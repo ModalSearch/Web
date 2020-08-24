@@ -14,7 +14,7 @@ const ResultsView = ({ data, theme }) => {
     if (data.type === 'terminal') {
 
         
-        let body_data = data.data.slice(0,20);
+        let body_data = data.data;
         body = body_data.map((item, idx) => {
             let result_elem = undefined;
             
@@ -42,7 +42,7 @@ const ResultsView = ({ data, theme }) => {
         });
 
     } else if (data.type === 'node') {
-        let ms = data.members.slice(0, 20);
+        let ms = data.members.slice(0, 300);
         body = ms.map((item, idx) => {
                         return (
                             <div key={`item${idx}`}
