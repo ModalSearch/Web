@@ -18,11 +18,12 @@ const Result = ({timestamp, source, data, theme}) => {
             backgroundColor: theme.base00,
             padding: 5,
             marginRight: 10,
-            // marginBottom: ,
+            marginBottom: 10,
             display: 'flex',
             flexWrap: 'wrap',
-            border: 'solid 1px',
-            borderColor: theme.base00,
+            // border: 'solid 1px',
+            // borderColor: theme.base01,
+            flex: 1,
             borderRadius: 3,
             transitionDuration: 1
         }}
