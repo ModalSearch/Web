@@ -22,9 +22,8 @@ function hexToRgb(hex) {
     } : null;
   }
 
-function ModalView({data, theme}) {
+function ModalView({data, relkey, theme}) {
 
-    
     let all_dates = [];
     Object.keys(data).forEach(prop_name => data[prop_name].forEach(val_and_time => all_dates.push(val_and_time[1])));
     all_dates = [...new Set(all_dates)].map(date_str => moment.utc(date_str));
@@ -36,7 +35,7 @@ function ModalView({data, theme}) {
     };
     return (
         <div>
-            <h3 style={{color: theme.base0D}}>Source Data:</h3>
+            <h3 style={{color: theme.base0D}}>{relkey.text}</h3>
             <table style={{borderCollapse: 'collapse'}}>
                 <tbody>
                     <tr style={{
@@ -46,7 +45,7 @@ function ModalView({data, theme}) {
                         border: `solid 1px ${theme.base01}`,
                         textAlign: 'left',}}>
                         <th style={header_cell_style}>time</th>
-                        {Object.keys(data).map(prop_name => <th style={header_cell_style}>{prop_name}</th>)}
+                        {Object.keys(data).map(prop_name => <th key={prop_name} style={header_cell_style}>{prop_name}</th>)}
                     </tr>
                     {all_dates.map((date, idx) => {
                         let relevant_data = {};
@@ -69,7 +68,7 @@ function ModalView({data, theme}) {
                                     maxHeight: 200,
                                     border: 'solid 1px',
                                     padding: 10,
-                                    borderColor: theme.base02}}>{date.format('MMMM Do YYYY, h:mm:ss a')}</td>
+                                    borderColor: theme.base03}}>{date.format('MMMM Do YYYY, h:mm:ss a')}</td>
                                 {Object.keys(data).map(prop_name => <td style={{
                                             border: 'solid 1px',
                                             borderColor: theme.base02
@@ -101,7 +100,7 @@ function Prop_val_list({ values, theme }) {
             if (val !== last_val) {
                 last_val = val;
                 return (
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div key={val} style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <span style={{
                             color: theme.base0B,
                             textAlign: 'left'
@@ -132,12 +131,14 @@ export default class CollapsedResult extends React.Component {
         super(props);
         Modal.setAppElement('#root');
         this.state = {
-            modalOpen: false
+            modalOpen: false,
+            isHovered: false
         };
     }
 
     render() {
-        const { data, theme } = this.props;
+        
+        const { data, relkey, theme, anno } = this.props;
         const bg_color_rgb = hexToRgb(theme.base02)
         const customStyles = {
             overlay: {
@@ -147,7 +148,7 @@ export default class CollapsedResult extends React.Component {
             content: {
                 backgroundColor: theme.base00,
                 borderColor: theme.base03,
-                top: '33%',
+                top: '50%',
                 left: '50%',
                 display: 'block',
                 right: 'auto',
@@ -161,23 +162,53 @@ export default class CollapsedResult extends React.Component {
         };
         return (
             <div style={{
-                padding: 5,
                 backgroundColor: theme.base01,
                 flex: 1,
-            }} onClick={(e) => {
+                borderRadius: 3,
+                border: 'solid 1px',
+                borderColor: this.state.isHovered ? theme.base02 : theme.base01,
+                cursor: this.state.isHovered ? 'pointer' : 'auto',
+                padding: 3,
+            }}
+            onMouseEnter={() => {this.setState({isHovered: true})}} 
+            onMouseLeave={() => {this.setState({isHovered: false})}} 
+            onClick={(e) => {
                 console.log('Clicked:', data);
                 if (!this.state.modalOpen) {
-                    this.setState({modalOpen: true});
+                    this.setState({modalOpen: true, isHovered: false});
                 }
             }}>
-
-                <table style={{ width: '100%', flex: 1 }}>
+                <div style={{
+                    borderBottom: 'solid 1px',
+                    borderColor: theme.base01,
+                }}>
+                    {relkey !== null ?
+                    <h3 style={{
+                        fontSize: 16,
+                        whiteSpace: 'nowrap',
+                        maxWidth: '50%',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        color: theme.base0D,
+                        display: 'inline-block',
+                        verticalAlign: 'middle',
+                        margin: 0,
+                        paddingRight: 5}}>{relkey.text}</h3> : null}
+                    {anno}
+                </div>
+                <table style={{
+                    borderRadius: 5,
+                    width: '100%',
+                    flex: 1,
+                    // backgroundColor: theme.base00,
+                    padding: 5 }}>
                     <tbody>
                         {Object.keys(data).map(prop_name => {
                             return (
                                 <tr style={{
                                     verticalAlign: 'top',
-                                }}>
+                                }}
+                                key={prop_name}>
                                     <td style={{ width: 0.1, whiteSpace: 'nowrap' }}>{prop_name}</td>
                                     <td style={{ display: 'block', width: '100%' }}>
                                         <Prop_val_list values={data[prop_name]} theme={theme}></Prop_val_list>
@@ -194,7 +225,7 @@ export default class CollapsedResult extends React.Component {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <ModalView data={data} theme={theme}/>
+                    <ModalView data={data} relkey={relkey} theme={theme}/>
                 </Modal>
             </div>
         );

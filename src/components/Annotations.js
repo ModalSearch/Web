@@ -23,7 +23,7 @@ class AnnoLink extends React.Component {
                     textDecoration: 'none',
                     padding: 3,
                     display: 'inline-block',
-                    whiteSpace: 'normal',
+                    whiteSpace: 'nowrap',
                     fontWeight: 500,
                 }}
                 href={`?q=${this.props.link}`}
@@ -40,11 +40,13 @@ const Annotations = ({ data, theme }) => {
     return (
         <div style={{
             flex: 1,
-            padding: 7,
+            padding: 5,
             overflow: 'scroll',
             overflowX: 'scroll',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
+            display: 'inline-block',
+            verticalAlign: 'middle'
             }}>
             {data.map((anno, idx) => (
                 <span style={{color: theme.base03}} key={anno.link}>

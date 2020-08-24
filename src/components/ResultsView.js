@@ -8,16 +8,20 @@ const ResultsView = ({ data, theme }) => {
     if (data === undefined || data.length === 0) {
         return <div>Connecting...</div>
     }
-    const annotation_elem = <Annotations data={data.annotation} theme={theme}></Annotations>
+    let annotation_elem = <Annotations data={data.annotation} theme={theme}></Annotations>
     let body = undefined;
 
     if (data.type === 'terminal') {
+
+        
         let body_data = data.data.slice(0,20);
         body = body_data.map((item, idx) => {
             let result_elem = undefined;
             
             if (item.type === 'abstract') {
-                result_elem = <CollapsedResult data={item.data} theme={theme}/>;
+                annotation_elem = null;
+                let anno_elem = <Annotations data={data.annotation.slice(1)} theme={theme}></Annotations>
+                result_elem = <CollapsedResult data={item.data} anno={anno_elem} relkey={data.key} theme={theme}></CollapsedResult>;
             } else if (item.type === 'item') {
                 result_elem = <Result timestamp={item.timestamp} source={item.id} data={item.data} theme={theme}></Result>;
             }
@@ -25,9 +29,10 @@ const ResultsView = ({ data, theme }) => {
                 <div key={`item${idx}`} style={{
                     borderTop: 'solid 1px',
                     borderColor: item.type === 'abstract' ? theme.base00 : theme.base00,
-                    paddingLeft: 10,
-                    paddingTop: 10,
+                    borderRadius: item.type === 'abstract' ? 5 : 3,
+                    padding: item.type === 'abstract' ? 0 : 5,
                     display: 'flex',
+                
                     // border: 'solid 1px',
                     // borderColor: theme.base02,
                     backgroundColor: theme.base01}}>
@@ -42,7 +47,7 @@ const ResultsView = ({ data, theme }) => {
                         return (
                             <div key={`item${idx}`}
                                 style={{
-                                    backgroundColor: theme.base00,
+                                    // backgroundColor: theme.base00,
                                     paddingTop: 5,
                                     paddingLeft: 5,
                                     borderRadius: 3,
@@ -59,7 +64,7 @@ const ResultsView = ({ data, theme }) => {
         <div style={{
             backgroundColor: theme.base01,
             borderLeft: 'solid 2px',
-            borderColor: theme.base01,
+            borderColor: data.type !== 'terminal' ? theme.base01 : theme.base00,
             flex: 1,
             borderTopLeftRadius: 3,
             borderTopRightRadius: 3,
