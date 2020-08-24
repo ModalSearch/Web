@@ -184,11 +184,13 @@ export default class CollapsedResult extends React.Component {
                     display: 'flex',
                     flexDirection: 'row',
                     verticalAlign: 'middle',
+                    overflowX: 'scroll',
                     flex: 1,
                 }}>
                     {relkey !== null ?
                     <div style={{
                         fontSize: 16,
+                        flex: 1,
                         whiteSpace: 'nowrap',
                         margin: 'auto',
                         color: theme.base0D,
