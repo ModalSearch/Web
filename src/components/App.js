@@ -94,7 +94,7 @@ class App extends React.Component {
         }
 
         return (
-            <div className="App" style={{
+            <div className="App" id="App" style={{
                 backgroundColor: theme.base00,
                 color: theme.base05,
                 minHeight: '100%'
