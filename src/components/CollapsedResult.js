@@ -182,26 +182,25 @@ export default class CollapsedResult extends React.Component {
                 <div style={{
                     borderBottom: 'solid 1px',
                     borderColor: theme.base01,
+                    whiteSpace: 'nowrap',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    verticalAlign: 'middle',
+                    flex: 1,
                 }}>
                     {relkey !== null ?
-                    <h3 style={{
+                    <div style={{
                         fontSize: 16,
                         whiteSpace: 'nowrap',
-                        maxWidth: '50%',
-                        // overflow: 'scroll',
-                        // textOverflow: 'ellipsis',
+                        margin: 'auto',
                         color: theme.base0D,
-                        display: 'inline-block',
-                        verticalAlign: 'middle',
-                        margin: 0,
-                        paddingRight: 5}}>{relkey.text}</h3> : null}
-                    {"›"}
+                        padding: 5}}>{relkey.text} ›</div> : null}
                     {anno}
                 </div>
                 <table style={{
                     borderRadius: 5,
-                    width: '100%',
-                    overflow: 'hidden',
+                    // width: '100%',
+                    overflow: 'scroll',
                     flex: 1,
                     // backgroundColor: theme.base00,
                     padding: 5 }}>

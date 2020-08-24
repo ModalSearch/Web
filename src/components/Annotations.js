@@ -44,7 +44,8 @@ const Annotations = ({ data, theme }) => {
             overflowX: 'scroll',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            verticalAlign: 'middle'
+            // verticalAlign: 'middle',
+            display: 'inline-block'
             }}>
             {data.map((anno, idx) => (
                 <span style={{color: theme.base03, overflow: 'scroll'}} key={anno.link}>
