@@ -45,40 +45,33 @@ function ModalView({data, relkey, theme}) {
                         <th style={header_cell_style}>time</th>
                         {Object.keys(data).map(prop_name => <th key={prop_name} style={header_cell_style}>{prop_name}</th>)}
                     </tr>
-                    {all_dates.map((date, idx) => {
-                        let relevant_data = {};
-                        Object.keys(data).forEach(prop_name => {
-                            data[prop_name].forEach(val_and_time => {
-                                if (moment.utc(val_and_time[1]).isSame(date)) {
-                                    relevant_data[prop_name] = val_and_time[0];
-                                }
-                            });
-                        });
-
-                        return (
-                            <tr style={{
-                                backgroundColor: idx % 2 === 0 ? theme.base00 : theme.base01,
+                        {all_dates.map((date, idx) => {
+                            const td_style = {
                                 maxHeight: 200,
-                                color: theme.base05,
-                                padding: 5,
-                                verticalAlign: 'top'}}>
-                                <td style={{
+                                border: 'solid 1px',
+                                padding: 10,
+                                borderColor: theme.base03
+                            };
+                            return (
+                                <tr style={{
+                                    backgroundColor: idx % 2 === 0 ? theme.base00 : theme.base01,
                                     maxHeight: 200,
-                                    border: 'solid 1px',
-                                    padding: 10,
-                                    borderColor: theme.base03}}>{date.format('MMMM Do YYYY, h:mm:ss a')}</td>
-                                {Object.keys(data).map(prop_name => <td style={{
-                                            border: 'solid 1px',
-                                            borderColor: theme.base02
-                                }}>
-                                    <div style={{padding: 10, minWidth: 100, maxHeight: 200, overflowY: 'scroll', textOverflow: 'ellipsis'}}>
-
-                                    {JSON.stringify(relevant_data[prop_name])}
-                                    </div>
-                                </td>)}
-                            </tr>
-                        );
-                    })}
+                                    color: theme.base05,
+                                    padding: 5,
+                                    verticalAlign: 'top'}}>
+                                    <td style={td_style}>
+                                            {date.format('MMMM Do YYYY, h:mm:ss a')}
+                                    </td>
+                                    {Object.keys(data).map(prop_name => {
+                                        return (
+                                            <td style={td_style}>
+                                                {data[prop_name][idx][0]}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })}
                 </tbody>
                 {/* {JSON.stringify(all_dates)} */}
             </table>
@@ -190,7 +183,7 @@ export default class CollapsedResult extends React.Component {
                     {relkey !== null ?
                     <div style={{
                         fontSize: 16,
-                        flex: 1,
+                        flex: 10,
                         whiteSpace: 'nowrap',
                         margin: 'auto',
                         color: theme.base0D,
@@ -213,7 +206,7 @@ export default class CollapsedResult extends React.Component {
                                 key={prop_name}>
                                     <td style={{ width: 0.1, whiteSpace: 'nowrap' }}>{prop_name}</td>
                                     <td style={{ display: 'block', width: '100%' }}>
-                                        <Prop_val_list values={data[prop_name]} theme={theme}></Prop_val_list>
+                                        <Prop_val_list values={data[prop_name].slice(0, 100)} theme={theme}></Prop_val_list>
                                     </td>
                                 </tr>
                             );
