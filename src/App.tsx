@@ -57,7 +57,9 @@ class App extends React.Component<IProps, IState> {
         const cols_str = cols.length > 0 ? `&cols=${cols.join(',')}` : '';
         const limit_str = `&limit=${limit}`;
         const skip_str = `&skip=${skip}`;
-        const req_url = 'http://0.0.0.0:3000' + q + cols_str + limit_str + skip_str;
+        // const api_url = window.location.href.startsWith('http://0.0.0.0') ? 'http://0.0.0.0:5000' : 'https://api.modalsearch.com';
+
+        const req_url = window.location.origin + q + cols_str + limit_str + skip_str;
         window.location.href = req_url;
     }
 
