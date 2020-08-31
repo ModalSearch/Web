@@ -3,7 +3,7 @@ import React from 'react';
 import Table from './Components/Table';
 import { CellType } from './Components/Table';
 import { parse } from 'querystring';
-import themes from './Styles/base16-themes';
+import themes from './styles/base16-themes';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 
 
