@@ -52,7 +52,7 @@ class TableView extends React.Component<IProps, IState> {
 
         this.state = {
             tableSpec: {
-                cols: ['name', 'bio'],
+                cols: ['name', 'bio', 'account_username'],
                 unique_cols: ['name'],
                 query: initQuery,
                 skip: Number.parseInt(initSkip),
